@@ -85,7 +85,7 @@ create_quiz_report <- function(course_id, quiz_id, report_type = c("student_anal
                include = include_file)
   args <- sc(args)
   resp <- canvas_query(url, args, "POST")
-
+  resp
 }
 
 get_quiz_reports <- function(course_id, quiz_id, include_all = TRUE){
