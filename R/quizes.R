@@ -84,9 +84,11 @@ create_quiz_report <- function(course_id, quiz_id, report_type = c("student_anal
                `quiz_report[includes_all_versions]` = include_all,
                include = include_file)
   args <- sc(args)
-  resp <- canvas_query(url, args, "POST")
+  #resp <- canvas_query(url, args, "POST")
+  resp <- process_response(url, args = args)
   resp
 }
+
 
 get_quiz_reports <- function(course_id, quiz_id, include_all = TRUE){
   # GET /api/v1/courses/:course_id/quizzes/:id
@@ -96,3 +98,20 @@ get_quiz_reports <- function(course_id, quiz_id, include_all = TRUE){
   resp <- process_response(url, args = args)
   return(resp)
 }
+
+#' Delete quiz report
+#' @param course_id a valid course id
+#' @param quiz_id a valid quiz id.
+#' @param report_id a valid report id.
+#' @export
+delete_quiz_report <- function(course_id, quiz_id, report_id){
+  # DELETE /api/v1/courses/:course_id/quizzes/:quiz_id/reports/:id
+  url <- paste0(canvas_url(), file.path("courses", course_id, "quizzes", quiz_id, "reports"), report_id)
+  fun <- getFromNamespace("DELETE", "httr")
+  resp <- fun(url,
+              httr::user_agent("rcanvas - https://github.com/daranzolin/rcanvas"),
+              httr::add_headers(Authorization = paste("Bearer", check_token())))
+  return(resp)
+}
+
+
