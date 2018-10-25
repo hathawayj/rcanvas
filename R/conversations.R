@@ -39,12 +39,3 @@ create_conversation <- function(course_id, recipient, message_title, message, at
 
 
 
-args <- sc(list(`recipients[]` = 31424,
-                subject = "Practice Sending",
-                body = "How how are you?",
-                `attachment_ids[]` = attachment_id,
-                group_conversation = FALSE
-
-))
-
-resp <- canvas_query(url, args, "POST")

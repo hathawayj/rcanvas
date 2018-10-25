@@ -13,16 +13,21 @@
 #' @param only an Array. Array of information to restrict to. Overrides include. “names” only returns file name information.
 #' @param sort a string. Sort results by this field. Defaults to 'name'. Note that `sort=user` implies `include[]=user`. Allowed values:   name, size, created_at, updated_at, content_type, user
 #' @param order a	string. The sorting order. Defaults to 'asc'. Allowed values: asc, desc.
-#'
-get_files_list <- function(id, id_type, ){
+#' @export
+get_files_list <- function(id, id_type, content_types = NULL, search_term = NULL, include = "user", only = NULL, sort = "name", order = "asc" ){
   # GET /api/v1/courses/:course_id/files
   # GET /api/v1/users/:user_id/files
   # GET /api/v1/groups/:group_id/files
   # GET /api/v1/folders/:id/files
-  content_types[]
-  search_term
-  include[]
-  only[]
-
+  url <- paste0(canvas_url(), file.path(id_type, id, "files"))
+  args <- list(`content_types[]` = content_types,
+               search_term = search_term,
+               `include[]` = include,
+               `only[]` = only,
+               sort = sort,
+               order = order)
+  args <- sc(args)
+  resp <- process_response(url, args = args)
+  return(resp)
 
 }
