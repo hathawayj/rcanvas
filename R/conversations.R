@@ -15,26 +15,19 @@
 # #' @param filter_mode a string. Used when generating “visible” in the API response. See the explanation under the index API action. Allowed values: and, or, default or
 # #' @param context_code a string. The course or group that is the context for this conversation. Same format as courses or groups in the recipients argument.
 
-create_conversation <- function(course_id, recipient, message_title, message, attachment_id, group_conversation = FALSE){
+create_conversation <- function(course_id, recipient, message_title, message, attachment_id, group_conversation = TRUE, bulk_message = TRUE){
   # POST /api/v1/conversations
   url <- paste0(canvas_url(), file.path("conversations"))
   args <- sc(list(`recipients[]` = recipient,
-                  `wiki_page[body]` = body,
                    subject = message_title,
                    body = message,
                   group_conversation = group_conversation,
+                  bulk_message = bulk_message,
                   `attachment_ids[]` = attachment_id
   ))
-  # resp <- httr::POST(url = url,
-  #                    httr::user_agent("rcanvas - https://github.com/daranzolin/rcanvas"),
-  #                    httr::add_headers(Authorization = paste("Bearer", rcanvas:::check_token())),
-  #                    body = args)
   resp <- canvas_query(url, args, "POST")
-
   httr::stop_for_status(resp)
-#  message(sprintf("Page '%s' created", title))
-  return(resp)
-
+  return("finished")
 }
 
 

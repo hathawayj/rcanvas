@@ -4,19 +4,12 @@
 \alias{get_quiz_list}
 \title{Get data frame of quizes in course}
 \usage{
-get_quiz_list(course_id, search = NULL)
+get_quiz_list(course_id, search = "")
 }
 \arguments{
 \item{course_id}{a valid course id}
 
-\item{search}{a string. The partial title of the pages to match and return.}
-
-\item{sort_type}{a string, Sort results by this field.  Allowed values: 'title',
-'created_at', and 'updated_at'}
-
-\item{order_type}{a string. The sorting order. Defaults to 'asc'. Allowed values: asc, desc}
-
-\item{published}{a boolean. If true, include only published paqes. If false, exclude published pages. If not present, do not filter on published status. Defaults to not present.}
+\item{search}{a string. The partial title of the pages to match and return. Defaults to `""` or a blank search}
 }
 \value{
 a data.frame with all pages from course.
